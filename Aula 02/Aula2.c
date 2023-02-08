@@ -11,8 +11,26 @@ int main()
 
 	int chute;
 
-	printf("Qual é o seu Chute?");
-	//scanf lê o teclado
+	printf("Qual e o seu Chute?");
+	// scanf lê o teclado
 	scanf("%d", &chute);
-	printf("Seu chute foi: %d", chute);
+	printf("Seu chute foi: %d\n", chute);
+	if (chute == numeroSecreto)
+	{
+		printf("Parabens! Voce Acertou!!\n");
+		printf("Voce e bom!!\n");
+	}
+	else
+	{
+		if (chute > numeroSecreto)
+		{
+			printf("Seu chute foi maior do que o numero secreto\n");
+		}
+		if (chute < numeroSecreto)
+		{
+			printf("Seu chute foi menor do que o numero secreto\n");
+		}
+		printf("Puts! Voce Errou!!\n");
+		printf("Nao desanime tente denovo!!\n");
+	}
 }
