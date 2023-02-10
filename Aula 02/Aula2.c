@@ -11,6 +11,9 @@ int main()
 	int numeroSecreto = 42;
 	int chute;
 	int tentativas = 1;
+	double pontos = 1000;
+
+
 	// função de incrementar
 	while (1)
 	{
@@ -27,7 +30,7 @@ int main()
 		}
 
 		int acertou = (chute == numeroSecreto);
-		int maior = (chute > numeroSecreto);
+		int maior = chute > numeroSecreto;
 
 		if (acertou)
 		{
@@ -47,7 +50,11 @@ int main()
 			printf("Seu chute foi menor do que o numero secreto\n");
 		}
 		tentativas++;
+
+		double pontosPerdidos = (chute - numeroSecreto) / 2.0;
+		pontos = pontos - pontosPerdidos;
 	}
 	printf("Fim de Jogo \n");
 	printf("Voce acertou em %d tentativas \n", tentativas);
+	printf("Total de pontos %.1f\n", pontos);
 }
