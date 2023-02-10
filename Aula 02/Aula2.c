@@ -15,7 +15,10 @@ int main()
 	// scanf lê o teclado
 	scanf("%d", &chute);
 	printf("Seu chute foi: %d\n", chute);
-	if (chute == numeroSecreto)
+
+	int acertou = (chute == numeroSecreto);
+
+	if (acertou)
 	{
 		printf("Parabens! Voce Acertou!!\n");
 		printf("Voce e bom!!\n");
