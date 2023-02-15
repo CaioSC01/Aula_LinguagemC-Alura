@@ -11,53 +11,78 @@ int acabou()
 	return 0;
 }
 
+int ehdirecao(char direcao)
+{
+	return direcao == ESQUERDA ||
+				 direcao == CIMA ||
+				 direcao == BAIXO ||
+				 direcao == DIREITA;
+}
+
 void move(char direcao)
 {
-	if (
-			direcao != 'a' &&
-			direcao != 'w' &&
-			direcao != 's' &&
-			direcao != 'd')
+
+	if (!ehdirecao(direcao))
 		return;
 
 	int proximox = heroi.x;
 	int proximoy = heroi.y;
 
-	m.matriz[heroi.x][heroi.y] = '.';
-
 	switch (direcao)
 	{
-	case 'a':
+	case ESQUERDA:
 		proximoy--;
 		break;
-	case 'w':
+	case CIMA:
 		proximox--;
 		break;
-	case 's':
+	case BAIXO:
 		proximox++;
 		break;
-	case 'd':
+	case DIREITA:
 		proximoy++;
 		break;
 	}
-	if (proximox >= m.linhas)
-		return;
-	if (proximoy >= m.colunas)
-		return;
-	if (m.matriz[proximox][proximoy] != '.')
+
+	if (!ehvalida(&m, proximox, proximoy))
 		return;
 
-	m.matriz[proximox][proximoy] = '@';
-	m.matriz[heroi.x][heroi.y] = '.';
+	if (!ehvazia(&m, proximox, proximoy))
+		return;
+
+	andanomapa(&m, heroi.x, heroi.y, proximox, proximoy);
 	heroi.x = proximox;
 	heroi.y = proximoy;
+}
+
+void fantasmas()
+{
+	MAPA copia;
+
+	copiamapa(&copia, &m);
+
+	for (int i = 0; i < copia.linhas; i++)
+	{
+		for (int j = 0; j < copia.colunas; j++)
+		{
+			if (copia.matriz[i][j] == FANTASMA)
+			{
+				if (ehvalida(&m, i, j + 1) && ehvazia(&m, i, j + 1))
+				{
+					andanomapa(&m, i, j, i, j + 1);
+				}
+			}
+		}
+	}
+
+	liberamapa(&copia);
 }
 
 int main()
 {
 
 	lemapa(&m);
-	encontramapa(&m, &heroi, '@');
+	encontramapa(&m, &heroi, HEROI);
 
 	do
 	{
@@ -67,6 +92,7 @@ int main()
 		scanf(" %c", &comando);
 
 		move(comando);
+		fantasmas();
 
 	} while (!acabou());
 
